@@ -16,7 +16,7 @@ uint8_t brightnessLevels[] = {50, 100, 180, 255};
 uint8_t brightnessIndex = 3;
 
 uint8_t mode = 0;
-const uint8_t modeCount = 5; // количество режимов
+const uint8_t modeCount = 8; // количество режимов
 
 unsigned long lastButtonPress = 0;
 bool buttonHeld = false;
@@ -85,7 +85,10 @@ void runEffect(uint8_t m) {
     case 1: effectElectricBlue(); break; // 🔷 Электрический синий + белое ядро
     case 2: effectPulsatingNeon(); break; // 🌈 Пульсирующий неон — цвета переливаются в дыхании
     case 3: effectGhostTrail(); break; // 👻 Эффект: "Призрачное движение"
-    case 4: effectOff(); break;
+    case 4: effectClassic1(); break;
+    case 5: effectClassic2(); break;
+    case 6: effectClassic3(); break;
+    case 7: effectOff(); break;
   }
 }
 
@@ -154,6 +157,42 @@ void effectGhostTrail() {
 
   strip.show();
   delay(40);
+}
+
+// 🔴🟠🔴 Красный - Оранжевый - Красный (как в оригинале case 0)
+void effectClassic1() {
+  strip.clear();
+  for (int i = 0; i < strip.numPixels(); i++) {
+    if (i < 5 || i >= 11)
+      strip.setPixelColor(i, strip.Color(255, 0, 0));      // Красный
+    else
+      strip.setPixelColor(i, strip.Color(180, 140, 0));    // Оранжевый
+  }
+  strip.show();
+}
+
+// 🔵⚪️🔵 Синий - Голубой - Синий (как в оригинале case 1)
+void effectClassic2() {
+  strip.clear();
+  for (int i = 0; i < strip.numPixels(); i++) {
+    if (i < 5 || i >= 11)
+      strip.setPixelColor(i, strip.Color(0, 0, 255));       // Синий
+    else
+      strip.setPixelColor(i, strip.Color(200, 250, 255));   // Голубой
+  }
+  strip.show();
+}
+
+// 🔴🔵🔴 Красно-синий неон (как в оригинале case 2)
+void effectClassic3() {
+  strip.clear();
+  for (int i = 0; i < strip.numPixels(); i++) {
+    if (i < 5 || i >= 11)
+      strip.setPixelColor(i, strip.Color(255, 0, 10));      // Розово-красный
+    else
+      strip.setPixelColor(i, strip.Color(0, 10, 255));      // Синий
+  }
+  strip.show();
 }
 
 // 💡 Выключено
